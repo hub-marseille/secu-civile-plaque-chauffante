@@ -16,7 +16,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textColor="#ffffff"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
 
 
@@ -61,5 +61,33 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/seekBar2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="18dp" />
+
+    <SeekBar
+        android:id="@+id/seekBar2"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/seekBar3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="19dp" />
+
+    <SeekBar
+        android:id="@+id/seekBar3"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/on"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="31dp" />
+
 
 </RelativeLayout>

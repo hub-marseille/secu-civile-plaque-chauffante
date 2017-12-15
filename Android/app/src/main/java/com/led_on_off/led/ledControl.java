@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.Toast;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -23,6 +24,7 @@ public class ledControl extends ActionBarActivity {
 
    // Button btnOn, btnOff, btnDis;
     ImageButton On, Off, Discnt, Abt;
+    SeekBar     red, blue, green;
     String address = null;
     private ProgressDialog progress;
     BluetoothAdapter myBluetooth = null;
@@ -47,6 +49,9 @@ public class ledControl extends ActionBarActivity {
         Off = (ImageButton)findViewById(R.id.off);
         Discnt = (ImageButton)findViewById(R.id.discnt);
         Abt = (ImageButton)findViewById(R.id.abt);
+        red = (SeekBar)findViewById(R.id.seekBar);
+        blue = (SeekBar)findViewById(R.id.seekBar2);
+        green = (SeekBar)findViewById(R.id.seekBar3);
 
         new ConnectBT().execute(); //Call the class to connect
 
@@ -77,6 +82,60 @@ public class ledControl extends ActionBarActivity {
             }
         });
 
+        red.setMax(255);
+        green.setMax(255);
+        blue.setMax(255);
+
+        red.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                sendPacket("R" + i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        green.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                sendPacket("G" + i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                sendPacket("B" + i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
     }
 
@@ -93,6 +152,22 @@ public class ledControl extends ActionBarActivity {
         }
         finish(); //return to the first layout
 
+    }
+
+    private void sendPacket(String to_send)
+    {
+        if (btSocket != null)
+        {
+            try
+            {
+
+                btSocket.getOutputStream().write(to_send.getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
     }
 
     private void turnOffLed()
