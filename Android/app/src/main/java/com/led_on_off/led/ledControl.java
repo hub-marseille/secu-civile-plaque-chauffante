@@ -61,7 +61,7 @@ public class ledControl extends ActionBarActivity {
             @Override
             public void onClick(View v)
             {
-                turnOnLed();      //method to turn on
+                sendPacket("1");      //method to turn on
             }
         });
 
@@ -69,7 +69,7 @@ public class ledControl extends ActionBarActivity {
             @Override
             public void onClick(View v)
             {
-                turnOffLed();   //method to turn off
+                sendPacket("0");   //method to turn off
             }
         });
 
@@ -89,7 +89,7 @@ public class ledControl extends ActionBarActivity {
         red.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                sendPacket("R" + i);
+                sendPacket("R" + String.format("%03d", i));
             }
 
             @Override
@@ -106,7 +106,7 @@ public class ledControl extends ActionBarActivity {
         green.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                sendPacket("G" + i);
+                sendPacket("G" + String.format("%03d", i));
             }
 
             @Override
@@ -123,7 +123,7 @@ public class ledControl extends ActionBarActivity {
         blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                sendPacket("B" + i);
+                sendPacket("B" + String.format("%03d", i));
             }
 
             @Override
