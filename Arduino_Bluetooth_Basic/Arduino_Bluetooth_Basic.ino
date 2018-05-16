@@ -1,19 +1,19 @@
-/* 
- *  Bluetooh Basic: LED ON OFF - Avishkar
- *  Coder - Mayoogh Girish
- *  Website - http://bit.do/Avishkar
- *  Download the App : 
- *  This program lets you to control a LED on pin 13 of arduino using a bluetooth module
- */
+/*
+    Bluetooh Basic: LED ON OFF - Avishkar
+    Coder - Mayoogh Girish
+    Website - http://bit.do/Avishkar
+    Download the App :
+    This program lets you to control a LED on pin 13 of arduino using a bluetooth module
+*/
 
 int sensorvalue = 0;
 float temperature = 0;
 int color = 0;
-int temp_target = 25;
-int data = 0;                //Variable for storing received data
+float temp_target = 10;
+char data = 0;                //Variable for storing received data
 String receive = "";
 
-void setup() 
+void setup()
 {
   Serial.begin(9600);         //Sets the data rate in bits per second (baud) for serial data transmission
   pinMode(8, OUTPUT);
@@ -26,32 +26,29 @@ void loop()
   temperature = sensorvalue * (5.0 / 1024.0);
   temperature = (temperature - 0.5) * 100;
   if (temperature < temp_target)
-    digitalWrite(8, HIGH);
-  else
-    digitalWrite(8, LOW);
-
- while (Serial.available() > 0) {
-  if (color != 'R' || receive.length() == 3)
   {
-    color = Serial.read();
-    receive = "";
-
+    digitalWrite(8, HIGH);
+    Serial.println("On");
   }
-  else if (color == 'R') {
+  else
+  {
+    digitalWrite(8, LOW);
+    Serial.println("Off");
+  }
+  //Serial.println(temperature);
+  while (Serial.available() > 0)
+  {
     data = Serial.read();
-    receive = receive + char(data);
-    if (receive.length() == 3)
+    if (data == '\n')
     {
-      temp_target = map(receive.toInt(), 0, 256, 20, 60);
-      Serial.println("value:          " + receive);
-        Serial.print(temperature);
-  Serial.print(" ");
-  Serial.print(color);
-  Serial.print(" ");
-  Serial.println(temp_target);
+      temp_target = receive.toFloat();
+      receive = "";
+      Serial.println(temperature);
+      Serial.println(temp_target);
+    }
+    else
+    {
+      receive += data;
     }
   }
-  else
-    Serial.read();
- }
-}       
+}
