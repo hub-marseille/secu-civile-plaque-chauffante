@@ -12,6 +12,8 @@ void setup(){
       monEcran.clear();
       monEcran.print("Radiations (Bq):");
       monEcran.setCursor(0,1);
+      pinMode(8, OUTPUT);
+      pinMode(10, OUTPUT);
       Serial.begin(9600);
       }
 
@@ -25,11 +27,15 @@ void loop() {
       }
       if (i > 0) {
         radiations = reponse.toFloat();
-      }
+      } 
       i = 0;
             monEcran.setCursor(0,1);
             monEcran.print(radiations);
             Serial.println(radiations); 
+            tone(9, 1000); 
+            digitalWrite(10, HIGH);
             delay(1000);
+            digitalWrite(10, LOW);
+            noTone(9);
             reponse = ""; 
 }
