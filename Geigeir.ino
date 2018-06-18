@@ -1,10 +1,11 @@
 #include <LiquidCrystal.h>
 
-LiquidCrystal monEcran(12,11,5,4,3,2);
+LiquidCrystal monEcran(12,11,7,6,5,4);
 
 char recu[20];
 String reponse;
 int i;
+const int buzzer = 8;
 float radiations = 10;
 
 void setup(){
@@ -12,7 +13,7 @@ void setup(){
       monEcran.clear();
       monEcran.print("Radiations (Bq):");
       monEcran.setCursor(0,1);
-      pinMode(8, OUTPUT);
+      pinMode(buzzer, OUTPUT);
       pinMode(10, OUTPUT);
       Serial.begin(9600);
       }
@@ -26,16 +27,16 @@ void loop() {
             i++;
       }
       if (i > 0) {
+            digitalWrite(10, HIGH);
+            tone(buzzer, 1000);
+            delay(1000);
+            noTone(buzzer);
+            digitalWrite(10, LOW);
         radiations = reponse.toFloat();
       } 
       i = 0;
             monEcran.setCursor(0,1);
             monEcran.print(radiations);
             Serial.println(radiations); 
-            tone(9, 1000); 
-            digitalWrite(10, HIGH);
-            delay(1000);
-            digitalWrite(10, LOW);
-            noTone(9);
             reponse = ""; 
 }
